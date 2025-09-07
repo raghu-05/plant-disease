@@ -3,6 +3,7 @@
 import os
 import json
 import io
+import gdown 
 import requests # Make sure requests is imported
 from fastapi import FastAPI, File, UploadFile, Query
 from PIL import Image
@@ -20,19 +21,14 @@ if not os.path.exists(model_path):
     print(f"🟢 Model not found at {model_path}. Downloading...")
     
     # Your personal direct download link is now here
-    file_url = "https://drive.google.com/uc?export=download&id=10e5IxWZv4_k4_eQGvuYiONlEExiCa00A"
+    file_url = "https://drive.google.com/file/d/10e5IxWZv4_k4_eQGvuYiONlEExiCa00A/view?usp=sharing"
     
     try:
-        response = requests.get(file_url, stream=True)
-        response.raise_for_status() # Raise an exception for bad status codes
-        
-        with open(model_path, "wb") as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                if chunk:
-                    f.write(chunk)
+        # Use gdown to download the file correctly
+        gdown.download(url=file_url, output=model_path, quiet=False)
         print("✅ Model downloaded successfully.")
     except Exception as e:
-        print(f"🔴 Failed to download model. Error: {e}")
+        print(f"🔴 Failed to download model with gdown. Error: {e}")
 # --- END: Automatic Model Downloader ---
 
 
