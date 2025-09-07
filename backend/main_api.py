@@ -9,6 +9,7 @@ from PIL import Image
 import numpy as np
 import tensorflow as tf
 from dotenv import load_dotenv, find_dotenv
+import google.generativeai as genai
 
 # --- NEW: Automatic Model Downloader ---
 working_dir = os.path.dirname(os.path.abspath(__file__))
