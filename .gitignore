@@ -5,8 +5,7 @@ venv/
 __pycache__/
 *.pyc
 
-# Ignore the large model file
-*.h5
+
 
 # CRITICAL: Ignore the secrets file
 .env

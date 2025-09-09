@@ -1,10 +1,7 @@
-# In backend/main_api.py
-
+# backend/main_api.py (Correct Google Gemini Version)
 import os
 import json
 import io
-import gdown 
-import requests # Make sure requests is imported
 from fastapi import FastAPI, File, UploadFile, Query
 from PIL import Image
 import numpy as np
@@ -12,30 +9,10 @@ import tensorflow as tf
 from dotenv import load_dotenv, find_dotenv
 import google.generativeai as genai
 
-# --- NEW: Automatic Model Downloader ---
+# --- Model and Class Indices Loading ---
 working_dir = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(working_dir, "plant_disease_model.h5")
-
-# Check if the model file exists. If not, download it.
-if not os.path.exists(model_path):
-    print(f"🟢 Model not found at {model_path}. Downloading...")
-    
-    # Your personal direct download link is now here
-    file_url = "https://drive.google.com/file/d/10e5IxWZv4_k4_eQGvuYiONlEExiCa00A/view?usp=sharing"
-    
-    try:
-        # Use gdown to download the file correctly
-        gdown.download(url=file_url, output=model_path, quiet=False)
-        print("✅ Model downloaded successfully.")
-    except Exception as e:
-        print(f"🔴 Failed to download model with gdown. Error: {e}")
-# --- END: Automatic Model Downloader ---
-
-
-# --- The rest of your file is the same ---
 class_indices_path = os.path.join(working_dir, "class_indices.json")
-
-# ... (The rest of your main_api.py file remains exactly the same) ...
 model = tf.keras.models.load_model(model_path)
 with open(class_indices_path, 'r') as f:
     class_indices = json.load(f)
