@@ -501,7 +501,7 @@ class AgroDoctorApp(MDApp):
         if not getattr(self, "selected_path", None):
             return
         Clock.schedule_once(lambda dt: self.show_dialog("Diagnosing...", "Please wait.", is_loading=True))
-        api_url = "http://127.0.0.1:8000/predict_disease"
+        api_url = "https://agrodoctor-api-raghu.onrender.com/predict_disease"
         try:
             with open(self.selected_path, "rb") as f:
                 files = {"file": (os.path.basename(self.selected_path), f, "image/jpeg")}
@@ -547,7 +547,7 @@ class AgroDoctorApp(MDApp):
 
     def execute_get_treatment(self, language):
         Clock.schedule_once(lambda dt: self.show_dialog(f"Fetching in {language}...", "Please wait.", is_loading=True))
-        api_url = f"http://127.0.0.1:8000/get_treatment?disease_name={self.predicted_disease}&language={language}"
+        api_url = f"https://agrodoctor-api-raghu.onrender.com/get_treatment?disease_name={self.predicted_disease}&language={language}"
         try:
             response = requests.get(api_url, timeout=60)
             Clock.schedule_once(lambda dt: self._handle_treatment_response(response, language))
